@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace AlphaDash.Controllers
 {
 
-    public class HomeController : Controller
+    public class DashboardController : Controller
     {
         private static List<HomeModel> _listarCheck = new List<HomeModel>()
         {
@@ -24,7 +24,7 @@ namespace AlphaDash.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            return View(HomeModel.RecuperarLista());
+            return View(DashboardModel.RecuperarLista());
 
         }
 

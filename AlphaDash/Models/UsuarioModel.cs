@@ -11,12 +11,12 @@ namespace AlphaDash.Models
             var ret = false;
             using (var conexao = new SqlConnection())
             {
-                conexao.ConnectionString = "Data Source=LAPTOP-RVT4934F\\MSSQLSERVER01;Initial Catalog=bancoalpha;";
+                conexao.ConnectionString = "Data Source=LAPTOP-RVT4934F\\MSSQLSERVER01;Initial Catalog=bancoalpha;Integrated Security=SSPI;";
                 conexao.Open();
                 using (var comando = new SqlCommand())
                 {
                     comando.Connection = conexao;
-                    comando.CommandText = string.Format("select count(*) from usuario where usuario='{0}' and senha='{1}", usuario, senha);
+                    comando.CommandText = string.Format("select count(*) from usuario where usuario='{0}' and senha='{1}'", usuario, senha);
                     ret=((int)comando.ExecuteScalar() > 0);               
                 }
             }

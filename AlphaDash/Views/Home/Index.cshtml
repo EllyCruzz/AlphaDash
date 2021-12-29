@@ -1,9 +1,104 @@
-﻿@{
+﻿@model List<AlphaDash.Models.HomeModel>
+@{
     ViewData["Title"] = "Home Page";
 }
 
+<style>
+    #cabecalho_grid > thead > tr th:nth-child(2) {
+        width: 110px;
+    }
+
+    #cabecalho_grid > thead > tr th:nth-child(3) {
+        width: 200px;
+    }
+
+    #conteudo_home {
+        margin-top: 20px;
+    }
+
+    #cabecalho_home {
+        border-bottom: 1px #dddddd solid;
+    }
+
+    #cabecalho_grid {
+        margin-bottom: 20px;
+    }
+</style>
 <form asp-controller="Login" asp-action="Logout" method="post">
     <button class="btn btn-primary btn-lg">Logout</button>
 </form>
 
+<div id="conteudo_home">
+    <section id="cabecalho_home">
+        <h1>@ViewData["Title"]</h1>
 
+    </section>
+    <section id="lista_home">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div id="cabecalho_grid" class="row">
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="grid_home" class="table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Horario</th>
+                                        <th>Cliente</th>
+                                        <th>Status</th>
+                                        <!--<th>DT(detalhes)</th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+
+                                        <tr data-id="@item.Id">
+                                            <td>@item.Horario</td>
+                                            <td>@item.Cliente</td>
+                                            <td>
+                                                <a class="btn btn-primary btn-alterar" role="button"><i class="glyphicon-pencil"></i>Checkin</a>
+                                            </td>
+                                        </tr>
+
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".btn-alterar").click(function () {
+                // possível toggle do texto do botão, mas não funcionou
+                //$(".vazio").toggle();
+                console.log("Chamou o CheckInOut");
+
+                $(this).html($(this).html() == 'Checkin' ? 'Checkout' : 'Ok');
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: '/Home/CheckInOut',
+                    data: {},
+                    success: function (result) {
+                        $(this).html(result);
+                    },
+                    error: function (result) {
+                        console.log("Erro: ", result);
+                    }
+                });
+            });
+        });
+    </script>
+
+    }
