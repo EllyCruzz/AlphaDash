@@ -80,11 +80,10 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $(".btn-alterar").click(function () {
-                // possível toggle do texto do botão, mas não funcionou
-                //$(".vazio").toggle();
+
                 console.log("Chamou o CheckInOut");
 
-                $(this).html($(this).html() == 'Checkin' ? 'Checkout' : 'Ok');
+                $(this).html($(this).html() == 'Checkout' ? 'OK' : 'Checkout');
                 event.preventDefault();
                 $.ajax({
                     type: 'POST',
