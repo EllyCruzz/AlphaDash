@@ -83,12 +83,18 @@
 
                 console.log("Chamou o CheckInOut");
 
-                $(this).html($(this).html() == 'Checkout' ? 'OK' : 'Checkout');
+                //$(this).html($(this).html() == 'Checkout' ? 'OK' : 'Checkout');
                 event.preventDefault();
+                var data = {
+                    
+                    // Aqui passa as variaveis com os dados que serão de ser actualizados na base de dados
+                };
+               // $(this).addClass("class"); // Aqui muda a class css caso queira
+                $(this).text("Checkout"); // Aqui voce muda o texto do botao caso queira
                 $.ajax({
                     type: 'POST',
                     url: '/Home/CheckInOut',
-                    data: {},
+                    data: {date},
                     success: function (result) {
                         $(this).html(result);
                     },
@@ -100,4 +106,26 @@
         });
     </script>
 
-    }
+    @*<script>
+        $(document).ready(function () {
+            $(document.body).on('click', '#id_botao', function (e) {
+                e.preventDefault();
+                var data = {
+                    // Aqui passa as variaveis com os dados que serão de ser actualizados na base de dados
+                };
+                $(this).addClass("class"); // Aqui muda a class css caso queira
+                $(this).text("texto"); // Aqui voce muda o texto do botao caso queira
+                $.ajax({
+                    type: "POST",
+                    url: "Fiheiro que faz update na bd",
+                    data: data,
+                    cache: true
+                }).done(function (msg) {
+                    $("#sucesso").html("sucesso").fadeIn(400);
+                    $("#sucesso").fadeOut(4000); // Aqui apresenta uma mensagem de sucesso caso queira
+                });
+            });
+        });
+    </script>*@
+
+}
