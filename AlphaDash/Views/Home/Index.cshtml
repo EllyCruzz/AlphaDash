@@ -60,7 +60,7 @@
                                             <td>@item.Horario</td>
                                             <td>@item.Cliente</td>
                                             <td>
-                                                <a class="btn btn-primary btn-alterar" role="button"><i class="glyphicon-pencil"></i>Checkin</a>
+                                                <a class="btn btn-primary btn-alterar" id="btnAlterar" role="button"><i class="glyphicon-pencil"></i>Checkin</a>
                                             </td>
                                         </tr>
 
@@ -77,7 +77,7 @@
     </section>
 </div>
 @section Scripts{
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         $(document).ready(function () {
             $(".btn-alterar").click(function () {
 
@@ -104,21 +104,25 @@
                 });
             });
         });
-    </script>
+    </script>*@
 
-    @*<script>
+    <script>
         $(document).ready(function () {
-            $(document.body).on('click', '#id_botao', function (e) {
-                e.preventDefault();
-                var data = {
+            $(document.body).on('click', '#btnAlterar', function () {
+               // e.preventDefault();
+        var _status = {};
+        _status.Status = "1";
+               // var data = {
                     // Aqui passa as variaveis com os dados que serão de ser actualizados na base de dados
-                };
-                $(this).addClass("class"); // Aqui muda a class css caso queira
-                $(this).text("texto"); // Aqui voce muda o texto do botao caso queira
+             //   };
+             //   $(this).addClass("class"); // Aqui muda a class css caso queira
+                $(thist).text("Checkout"); // Aqui voce muda o texto do botao caso queira
                 $.ajax({
                     type: "POST",
-                    url: "Fiheiro que faz update na bd",
-                    data: data,
+                    url: "Home/AtualizaStatus",
+                    data: JSON.stringify(_status),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
                     cache: true
                 }).done(function (msg) {
                     $("#sucesso").html("sucesso").fadeIn(400);
@@ -126,6 +130,6 @@
                 });
             });
         });
-    </script>*@
+    </script>
 
 }
