@@ -23,6 +23,10 @@
     #cabecalho_grid {
         margin-bottom: 20px;
     }
+    #status {
+        display: none;
+    }
+    
 </style>
 <form asp-controller="Login" asp-action="Logout" method="post">
     <button class="btn btn-primary btn-lg">Logout</button>
@@ -59,7 +63,9 @@
                                         <tr data-id="@item.Id">
                                             <td>@item.Horario</td>
                                             <td>@item.Cliente</td>
+                                            <input type="hidden" id="statusHidden" value="@item.Status"/>
                                             <td>
+
                                                 <a class="btn btn-primary btn-alterar" id="btnAlterar" role="button"><i class="glyphicon-pencil"></i>Checkin</a>
                                             </td>
                                         </tr>
@@ -108,25 +114,25 @@
 
     <script>
         $(document).ready(function () {
-            $(document.body).on('click', '#btnAlterar', function () {
-               // e.preventDefault();
-        var _status = {};
-        _status.Status = "1";
-               // var data = {
-                    // Aqui passa as variaveis com os dados que serão de ser actualizados na base de dados
-             //   };
-             //   $(this).addClass("class"); // Aqui muda a class css caso queira
-                $(thist).text("Checkout"); // Aqui voce muda o texto do botao caso queira
+            $(document.body).on('click', '#btnAlterar', function (e) {
+                e.preventDefault();
+                var linhaItem = $('#btnAlterar').parents('[data-id]');
+                var itemId = $(linhaItem).attr('data-id');
+                var status = $('#statusHidden').val();
+
+                var data = {
+                    Id: itemId,
+                    Status: status
+                };
+
                 $.ajax({
-                    type: "POST",
-                    url: "Home/AtualizaStatus",
-                    data: JSON.stringify(_status),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    cache: true
-                }).done(function (msg) {
-                    $("#sucesso").html("sucesso").fadeIn(400);
-                    $("#sucesso").fadeOut(4000); // Aqui apresenta uma mensagem de sucesso caso queira
+
+                    type: 'POST',
+                    url: '/Home/AtualizaStatus',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(data)
+
+
                 });
             });
         });

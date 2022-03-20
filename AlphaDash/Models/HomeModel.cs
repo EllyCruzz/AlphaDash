@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SqlClient;
 
 namespace AlphaDash.Models
@@ -28,10 +29,10 @@ namespace AlphaDash.Models
                     {
                         ret.Add(new HomeModel
                         {
-                            Id=(int)reader["id"],
-                            Horario=(string)reader["horario"],
-                            Cliente=(int)reader["idcliente"],
-                            Status=(int)reader["status"]
+                            Id = (int)reader["id"],
+                            Horario = (string)reader["horario"],
+                            Cliente = (int)reader["idcliente"],
+                            Status = (int)reader["status"]
 
                         });
                     }
@@ -41,10 +42,11 @@ namespace AlphaDash.Models
             return ret;
         }
 
+
+
         //método para atualizar o status da agenda
-        public static List<HomeModel> AtualizaStatus()
+        public void AtualizaStatus(HomeModel homeModel)
         {
-            var ret = new List<HomeModel>();
             using (var conexao = new SqlConnection())
             {
                 conexao.ConnectionString = "Data Source=LAPTOP-RVT4934F\\MSSQLSERVER01;Initial Catalog=bancoalpha;Integrated Security=SSPI;";
@@ -52,54 +54,45 @@ namespace AlphaDash.Models
                 using (var comando = new SqlCommand())
                 {
                     comando.Connection = conexao;
-                    comando.CommandText = "update agenda set status ='1' where id = '1'";
-                    var reader = comando.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        ret.Add(new HomeModel
-                        {
-                            Id = (int)reader["id"],
-                            Status = (int)reader["status"]
+                    comando.CommandText = "update agenda set status='" + this.Status + "' where Id='" + this.Id;
+                    comando.Connection.Open();
+                    comando.ExecuteNonQuery();
 
-                        });
-                    }
                 }
-               
-            }
 
-            return ret;
+
+            }
+            // de acordo com o nome do botão alterar o numero do status para 1 ou 2
+            // posso fazer if?
+            //if nomedobotao="Checkin" { update coluna status para 1 } else if nomedobotao="Checkout {update coluna status para 2, e desativa clique do botão}
+            //public int Salvar()
+            //    {
+            //        var ret = 0;
+
+            //        var model RecuperarPeloId(this.Id);
+
+            //        using (var conexao = new SqlConnection())
+            //        {
+            //            conexao.ConnectionString = "Data Source=LAPTOP-RVT4934F\\MSSQLSERVER01;Initial Catalog=bancoalpha;Integrated Security=SSPI;";
+            //            conexao.Open();
+
+            //            using (var comando = new SqlCommand())
+            //            {
+            //                comando.Connection = conexao;
+
+            //                if (model != null)
+            //                {
+            //                    comando.CommandText = string.Format(
+            //                        "update agenda set status={1} where id={0}",
+            //                        this.Id, this.Status);
+            //        }
+            //            }
+            //            return ret;
+            //        }
+
+            //    }
 
         }
-        // de acordo com o nome do botão alterar o numero do status para 1 ou 2
-        // posso fazer if?
-        //if nomedobotao="Checkin" { update coluna status para 1 } else if nomedobotao="Checkout {update coluna status para 2, e desativa clique do botão}
-    //public int Salvar()
-    //    {
-    //        var ret = 0;
-
-    //        var model RecuperarPeloId(this.Id);
-
-    //        using (var conexao = new SqlConnection())
-    //        {
-    //            conexao.ConnectionString = "Data Source=LAPTOP-RVT4934F\\MSSQLSERVER01;Initial Catalog=bancoalpha;Integrated Security=SSPI;";
-    //            conexao.Open();
-
-    //            using (var comando = new SqlCommand())
-    //            {
-    //                comando.Connection = conexao;
-
-    //                if (model != null)
-    //                {
-    //                    comando.CommandText = string.Format(
-    //                        "update agenda set status={1} where id={0}",
-    //                        this.Id, this.Status);
-    //        }
-    //            }
-    //            return ret;
-    //        }
-           
-    //    }
-    
+    }
 }
 
-}

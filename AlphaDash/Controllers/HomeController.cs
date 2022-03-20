@@ -28,5 +28,32 @@ namespace AlphaDash.Controllers
 
         }
 
+        [HttpPost]
+        public void AtualizaStatus([FromBody] HomeModel homemodel)
+        {
+            var home = new HomeModel();
+            home.AtualizaStatus(homemodel); 
+            //pegr os valores que vao ser puxados do body e atualizar tabela
+
+         //   var resultado = "OK";
+         //   var mensagens = new List<string>();
+         //   var idSalvo = string.Empty;
+
+
+         //   var id = model.AtualizaStatus();
+         //   if (id > 0)
+         //   {
+         //       idSalvo = id.ToString();
+         //   }
+         //   else
+         //   {
+         //       resultado = "ERRO";
+         //   }
+
+         ////   return HomeModel.AtualizaStatus();
+        }
+
+
+
     }
 }
